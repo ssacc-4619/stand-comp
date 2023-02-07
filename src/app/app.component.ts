@@ -11,7 +11,7 @@ import { TodoState } from './store/state/todo.state';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss', './style.scss'],
   imports : [CommonModule, RouterModule, ReactiveFormsModule],
   standalone : true
 })
