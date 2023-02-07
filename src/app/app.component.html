@@ -1,11 +1,23 @@
 <div>
-  <img src="https://i.kym-cdn.com/photos/images/original/000/157/783/1u7p.jpg" />
+  <!-- <img src="https://i.kym-cdn.com/photos/images/original/000/157/783/1u7p.jpg" /> -->
+  <form [formGroup]="form" ngxsForm='form' class="form">
+    <div class="input-container">
+      <input type="text" formControlName="description" placeholder="Insert Todo ..." />
+    </div>
 
-  <button routerLink="sorpresa">Vuoi una sopresa?</button>
+    <div class="input-container">
+      <input type="checkbox" id="done" formControlName="done">
+      <label for="done">Done?</label>
+    </div>
+
+    <button (click)="onSubmit()">Submit</button>
+  </form>
 
   <router-outlet></router-outlet>
 
-  <app-component-b></app-component-b>
-  <app-component-c></app-component-c>
+  <h4>Todo List:</h4>
+  <div *ngFor="let todo of todos$ | async" class="todo-item">
+    <span>{{ todo | json }}</span>
+  </div>
 </div>
 
