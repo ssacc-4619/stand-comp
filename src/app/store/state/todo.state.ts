@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { TodoItem } from '../model/todo-item';
-import { TodoAction } from './todo.actions';
+import { patch, updateItem } from '@ngxs/store/operators';
+import { AddTodo, ToggleTodoDoneStatus } from './todo.actions';
 
 export class TodoStateModel {
   public items : TodoItem[];
@@ -17,10 +18,19 @@ const defaults : TodoStateModel = {
 })
 @Injectable()
 export class TodoState {
-  @Action(TodoAction)
-  add({ getState, setState }: StateContext<TodoStateModel>, { payload }: TodoAction) {
+  @Action(AddTodo)
+  add({ getState, setState }: StateContext<TodoStateModel>, { payload }: AddTodo) {
     const state = getState();
     setState({ items: [ ...state.items, payload ] });
+  }
+
+  @Action(ToggleTodoDoneStatus)
+  toggle({ setState }: StateContext<TodoStateModel>, { payload } : ToggleTodoDoneStatus) {
+    setState(
+      patch<TodoStateModel>({
+        items : updateItem<TodoItem>(item=> item?.description === item?.description, patch({ done : payload.done }))
+      })
+    );
   }
 
   @Selector()

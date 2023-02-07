@@ -311,4 +311,19 @@ svg#clouds {
   padding: 4px;
   border: 2px solid black;
   margin-bottom: 4px;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .done {
+    text-decoration: line-through;
+  }
+
+  .hint {
+    color: rgba(0, 0, 0, 0.4);
+    font-variant: small-caps;
+  }
 }

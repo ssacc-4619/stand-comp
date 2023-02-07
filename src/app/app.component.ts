@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { TodoItem } from './store/model/todo-item';
-import { TodoAction } from './store/state/todo.actions';
-import { TodoState, TodoStateModel } from './store/state/todo.state';
+import { AddTodo, ToggleTodoDoneStatus } from './store/state/todo.actions';
+import { TodoState } from './store/state/todo.state';
 
 @Component({
   selector: 'app-root',
@@ -32,12 +32,19 @@ export class AppComponent {
 
   onSubmit() {
     if(this.form.valid) {
-      this.store.dispatch(new TodoAction({
+      this.store.dispatch(new AddTodo({
         description : this.form.get('description')?.value,
         done : this.form.get('done')?.value || false
       })).subscribe(() => {
         this.form.reset();
       });
     }
+  }
+
+  toggleDone(todo : TodoItem) {
+    this.store.dispatch(new ToggleTodoDoneStatus({
+      description : todo.description,
+      done : !todo.done
+    }));
   }
 }
